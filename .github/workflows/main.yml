@@ -16,15 +16,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y masscan
           
-      - name: Run masscan
+      - name: Run masscan with sudo
         run: |
-          masscan -iL VN-suip.biz.txt \
+          sudo masscan -iL VN-suip.biz.txt \
             -p2087 \
             --rate 500000 \
             --wait 15 \
             -oL sobig.txt \
             --status 10 \
             2>&1 | tee output.log
+          
+      - name: Fix permission for output files
+        run: |
+          sudo chown $USER:$USER sobig.txt output.log 2>/dev/null || true
           
       - name: Upload results
         uses: actions/upload-artifact@v4
