@@ -8,19 +8,21 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
         
+      - name: Install masscan
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y masscan
+          
       - name: Run masscan
         run: |
-          docker run --rm \
-            -v $(pwd):/data \
-            robertdavidgraham/masscan \
-            -iL /data/VN-suip.biz.txt \
+          masscan -iL VN-suip.biz.txt \
             -p2087 \
             --rate 500000 \
             --wait 15 \
-            -oL /data/sobig.txt \
+            -oL sobig.txt \
             --status 10 \
             2>&1 | tee output.log
           
