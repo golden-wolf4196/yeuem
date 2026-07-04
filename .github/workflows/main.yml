@@ -1,0 +1,33 @@
+name: Masscan Scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Run masscan
+        run: |
+          docker run --rm \
+            -v $(pwd):/data \
+            robertdavidgraham/masscan \
+            -iL /data/VN-suip.biz.txt \
+            -p2087 \
+            --rate 500000 \
+            --wait 15 \
+            -oL /data/sobig.txt \
+            --status 10 \
+            2>&1 | tee output.log
+          
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-results
+          path: |
+            sobig.txt
+            output.log
