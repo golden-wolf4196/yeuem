@@ -19,7 +19,17 @@ jobs:
       - name: Run masscan with sudo
         run: |
           sudo masscan -iL VN-suip.biz.txt \
-            -p445 \
+            -p443 \
+            --rate 500000 \
+            --wait 15 \
+            -oL sobig.txt \
+            --status 10 \
+            --exclude 255.255.255.255 \
+            2>&1 | tee output.log
+      - name: Run masscan with sud0
+        run: |
+          sudo masscan -iL VN-suip.biz.txt \
+            -p80 \
             --rate 500000 \
             --wait 15 \
             -oL sobig.txt \
