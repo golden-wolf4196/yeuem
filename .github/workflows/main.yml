@@ -19,7 +19,7 @@ jobs:
       - name: Run masscan with sudo
         run: |
           sudo masscan -iL VN-suip.biz.txt \
-            -p2087 \
+            -p445 \
             --rate 500000 \
             --wait 15 \
             -oL sobig.txt \
