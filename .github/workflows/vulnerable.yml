@@ -1,0 +1,32 @@
+name: Vulnerable Scanner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: |
+          pip install aiohttp tqdm aiohttp-socks
+          
+      - name: Run scanner
+        run: |
+          python scanner.py -l ip.txt -o vulnerable.txt
+          
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-results
+          path: |
+            vulnerable.txt
