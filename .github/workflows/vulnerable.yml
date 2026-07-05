@@ -23,7 +23,7 @@ jobs:
           
       - name: Run scanner
         run: |
-          python scanner.py -l ip.txt -o vulnerable.txt
+          python scanner.py -l ip.txt -o vulnerable.txt --threads 10000
           
       - name: Upload results
         uses: actions/upload-artifact@v4
